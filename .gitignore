@@ -1,0 +1,4 @@
+node_modules/
+
+routes/authTokenSTT.js
+routes/authTokenTTS.js

@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    background: url('https://voice.ai/hub/wp-content/uploads/2023/02/ezgif.com-gif-maker-1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    padding: 20px 3vw 4vw 3vw;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box{
+    padding: 15px 12px;
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(122, 81, 255, 0.326));
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4vw;
+  }
+  .box h1 {
+    font-size: 5vw;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+  }
+  select {
+    width: 50%;
+    padding: 12px 10px;
+    border-radius: 20px;
+  }
+  .box textarea {
+    height: 40%;
+    width: 40%;
+    padding: 1.3vw;
+    font-size: 20px;
+    border-radius: 20px;
+    /* background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(160, 58, 223, 0.326)); */
+  }
+  .buttons button {
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+  }
