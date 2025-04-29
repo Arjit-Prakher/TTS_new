@@ -13,11 +13,16 @@
             <select id="voices" name="options">
                
             </select>
-            <textarea name="" id="textarea" placeholder="Enter your text here..."></textarea>
+            <textarea name="" id="textarea" placeholder="Enter your text here..." required></textarea>
             <div class="buttons">
-                <button type="submit">Let's Go</button>
+                <button type="submit" id="submitbtn">Let's Go</button>
+            </div>
+
+            <div id="output">
+                <audio id="audioPlayer" controls></audio>
             </div>
         </div>
+
     </div>
 
     <script src="/javascripts/tts.js"></script>
