@@ -1,6 +1,7 @@
 var express = require('express');
 const { getAllVoices } = require('./getAllVoices');
 const getTokenTTS = require("./authTokenTTS");
+const axios = require('axios');
 // const { getTokenSTT } = require("./authTokenSTT");
 var router = express.Router();
 
@@ -26,31 +27,57 @@ router.get('/api/voices', async function (req, res) {
   }
 });
 
+
 router.post('/api/tts', async function (req, res) {
   const { text, selectedVoice } = req.body;
-
-
-  const API_URL = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/6902873c-cd8a-44ed-a634-473967bb5df6/v1/synthesize';
   const token = await getTokenTTS();
+
+  const API_URL = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/v1/synthesize';
+
   try {
-    const response = await fetch(`${API_URL}?voice=${selectedVoice}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({ text })
-    });
-    res.send(response);
+    const response = await axios.post(`${API_URL}?voice=${selectedVoice}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: {
+          'text': JSON.stringify(text)
+        }
+      });
+
+    // Set proper headers for MP3 playback
+    // res.set({
+    //   'Content-Type': 'audio/mp3'
+    // });
+    console.log("Response: ", response);
+    console.log(response.data);
+    res.send(response.data); // Send the audio data to the frontend
   } catch (error) {
-    console.error('Error in TTS: ', error);
-    res.status(500).send('Error in TTS');
-    
+    console.error('Error in TTS:', error);
+    res.status(500).send('Error generating speech');
   }
-
-  
-
 });
+
+// router.post('/api/tts', async function (req, res) {
+//   const { text, selectedVoice } = req.body;
+//   const token = await getTokenTTS();
+//   const API_URL = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/6902873c-cd8a-44ed-a634-473967bb5df6/v1/synthesize';
+//   try {
+//     const response = await fetch(`${API_URL}?voice=${selectedVoice}`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${token}`,
+//       },
+//       body: JSON.stringify({ text })
+//     });
+//     console.log(response.headers)
+//     res.send(response.headers.Headers);
+//   } catch (error) {
+//     console.error('Error in TTS: ', error);
+//     res.status(500).send('Error in TTS');
+//   }
+// });
 
 
 // SPEECH TO TEXT

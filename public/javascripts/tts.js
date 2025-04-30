@@ -24,21 +24,27 @@ submitbtn.addEventListener('click', async function () {
     const selectedVoice = document.getElementById('voices').value;
     submitbtn.innerHTML = "Going..";
 
-    const response = await fetch('/api/tts', {
+    const response = await fetch('http://localhost:3000/api/tts', {
+        
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ text, selectedVoice })
     });
-    console.log(response);
+
+    // const result = await response.json();
+  
+    console.log("Response from backend: ", response);
+  
     if(response.ok) {
         submitbtn.innerHTML = "Let's go!";
         const audioBlob = await response.blob();
+        console.log("Audio blob: ", audioBlob);
         const audioUrl = URL.createObjectURL(audioBlob);
         const audioPlayer = document.getElementById('audioPlayer');
         audioPlayer.src = audioUrl;
-        // audio.play();
+       
     }
     else {
         console.error('Error in TTS response: ', response.statusText);

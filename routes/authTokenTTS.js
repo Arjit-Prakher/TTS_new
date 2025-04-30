@@ -5,14 +5,14 @@ let apiToken = null;
 let tokenExpiry = null;
 
 //getting api key from .env file,
-const API_KEY = process.env.API_KEY;
+const API_KEY_TTS = process.env.API_KEY_TTS;
 
 async function generateNewToken() {
     try {
 
         const formData = new URLSearchParams({
         grant_type: "urn:ibm:params:oauth:grant-type:apikey",
-        apikey: API_KEY,
+        apikey: API_KEY_TTS,
         });
         
         const requestOptions = {
