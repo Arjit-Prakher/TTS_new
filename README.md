@@ -1,41 +1,45 @@
-# To use the application.
+# Project Setup Guide
 
-Create a file called authTokenTTS.js in the routes folder and paste the following, and replace your API_KEY
+Follow the steps below to set up and run the project on your local machine.
+
+## 1. Clone the Repository
+
+Open your terminal and run the following command to clone the repository:
+
 ```
-let apiToken = '';
-let tokenExpiry = 0;
-
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-const urlencoded = new URLSearchParams();
-urlencoded.append("grant_type", "urn:ibm:params:oauth:grant-type:apikey");
-urlencoded.append("apikey", "Your API_KEY here");
-
-const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: urlencoded,
-};
-
-async function getTokenTTS() {
-
-    if (Date.now() >= tokenExpiry) {
-        // console.log("Token expired. Requesting new token...");
-        try {
-            const response = await fetch("https://iam.cloud.ibm.com/identity/token#apikey", requestOptions);
-            const result = await response.json();
-    
-            apiToken = result.access_token;
-            tokenExpiry = Date.now() + result.expires_in * 1000;
-            // console.log("Token expiry: ", tokenExpiry);
-            // console.log("Date.now()  : ", Date.now());
-        } catch (error) {
-            console.error(error);
-        }
-    } 
-    return apiToken;
-}
-
-module.exports =  getTokenTTS ;
+git clone <git-repo-link>
 ```
+
+Then, open the project folder in your preferred code editor and terminal.
+
+## 2. Install Dependencies
+
+Ensure you're in the root directory of the project and run:
+
+```
+npm install
+```
+
+## 3. Configure Environment Variables
+
+Create a `.env` file in the root directory of the project. Use the `sampleENV.env` file as a reference. For example:
+
+```
+API_KEY=68tnjyI88w73aXPV4YFb7pWt2ir4Vn-Z0SeN0sg7fZDF
+```
+
+## 4. Run the Application
+
+You can run the project in either production or development mode:
+
+- **Production Mode**  
+  ```
+  npm start
+  ```
+
+- **Development Mode**  
+  ```
+  npm run dev
+  ```
+
+For additional scripts and options, refer to the `scripts` section in the `package.json` file.
