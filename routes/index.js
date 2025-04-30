@@ -32,29 +32,33 @@ router.post('/api/tts', async function (req, res) {
   const { text, selectedVoice } = req.body;
   const token = await getTokenTTS();
 
-  const API_URL = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/v1/synthesize';
+  const API_URL =
+    "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/6902873c-cd8a-44ed-a634-473967bb5df6/v1/synthesize";
 
   try {
-    const response = await axios.post(`${API_URL}?voice=${selectedVoice}`,
+    const response = await axios.post(
+      `${API_URL}?voice=${selectedVoice}`,
+      {
+        text: JSON.stringify(text),
+      },
       {
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          Accept: "audio/wav",
         },
-        body: {
-          'text': JSON.stringify(text)
-        }
-      });
+        responseType: "arraybuffer",
+      }
+    );
 
-    // Set proper headers for MP3 playback
-    // res.set({
-    //   'Content-Type': 'audio/mp3'
-    // });
-    console.log("Response: ", response);
-    console.log(response.data);
+    res.setHeader(
+      "Content-Type",
+      response.headers["content-type"] || "application/octet-stream"
+    );
+
     res.send(response.data); // Send the audio data to the frontend
   } catch (error) {
-    console.error('Error in TTS:', error);
-    res.status(500).send('Error generating speech');
+    console.error("Error in TTS:", error);
+    res.status(500).send("Error generating speech");
   }
 });
 
