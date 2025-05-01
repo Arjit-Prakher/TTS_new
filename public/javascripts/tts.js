@@ -1,18 +1,31 @@
 async function getAllVoices() {
-    const voices = document.getElementById('voices');
-    const url = "http://localhost:3000/api/voices";
-    // const allVoiceNames = [];
+
+  let options = document.createElement('option');
+  const voices = document.getElementById('voices');
+  options.textContent = "Loading";
+  voices.appendChild(options)
+  
+  const url = "http://localhost:3000/api/voices";
+  
+  try {
     const response = await fetch(url);
     const result = await response.json();
-
-    // console.log(result.voices);
-
+    voices.removeChild(options);
+    
     result.voices.forEach(element => {
-        const options = document.createElement('option');
-        options.value = element.name;
-        options.textContent = element.name;
-        voices.appendChild(options);
+      options = document.createElement('option');
+      options.value = element.name;
+      options.textContent = element.name;
+      voices.appendChild(options);
     });
+  } catch (error) {
+    options.textContent = `Could not load voices: ${error}`;
+    voices.appendChild(options);
+    
+  }
+
+  
+
 
 }
 getAllVoices();
