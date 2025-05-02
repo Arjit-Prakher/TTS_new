@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="/stylesheets/stt.css">
 </head>
 <body>
-    <h1>Speech to text</h1>
+
+    <div class="container">
+        <div class="box">
+            <h1>Speech to Text</h1>
+
+            <div class="inputs">
+                <div class="uploads">
+                    
+                    <input type="file" name="audioFile" id="audioFile" accept="audio/*">
+                    <button id="submitbtn">Transcribe</button>
+
+                </div>
+                <div class="records">Real Time Processing Comming Soon..</div>
+            </div>
+            
+            <div class="outputs">
+                <textarea name="" id="textarea" placeholder="Transcription will show here.." required></textarea>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script src="/javascripts/stt.js"></script>
 </body>
 </html>

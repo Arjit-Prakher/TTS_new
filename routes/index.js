@@ -1,8 +1,9 @@
 var express = require('express');
+const multer = require('multer');
 const { getAllVoices } = require('./getAllVoices');
 const getTokenTTS = require("./authTokenTTS");
+const getTokenSTT = require("./authTokenSTT");
 const axios = require('axios');
-// const { getTokenSTT } = require("./authTokenSTT");
 var router = express.Router();
 
 /* GET home page. */
@@ -89,6 +90,34 @@ router.post('/api/tts', async function (req, res) {
 router.get('/stt', function (req, res) {
   res.render('stt');
 })
+
+const upload = multer({
+  storage: multer.memoryStorage()
+});
+router.post('/api/stt', upload.single('audioFile'), async function (req, res) {
+  try {
+    const token = await getTokenSTT();
+    const API_URL = "https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/b25d8218-1d27-4830-910d-919709db0c3b/v1/recognize";
+
+    const response = await fetch(`${API_URL}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'Authorization': `Bearer ${token}`
+      },
+      body: req.file.buffer
+    });
+
+    const result = await response.json();
+    const transcript = result.results.map(r => r.alternatives[0].transcript).join(' ');
+    // res.json({ transcript });
+    res.send(transcript);
+    // console.log(transcript);
+  } catch (error) {
+    console.log("Nothing at backend");
+  }
+
+});
 
 
 module.exports = router;
