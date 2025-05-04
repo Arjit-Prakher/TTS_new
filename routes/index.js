@@ -63,26 +63,6 @@ router.post('/api/tts', async function (req, res) {
   }
 });
 
-// router.post('/api/tts', async function (req, res) {
-//   const { text, selectedVoice } = req.body;
-//   const token = await getTokenTTS();
-//   const API_URL = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/6902873c-cd8a-44ed-a634-473967bb5df6/v1/synthesize';
-//   try {
-//     const response = await fetch(`${API_URL}?voice=${selectedVoice}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${token}`,
-//       },
-//       body: JSON.stringify({ text })
-//     });
-//     console.log(response.headers)
-//     res.send(response.headers.Headers);
-//   } catch (error) {
-//     console.error('Error in TTS: ', error);
-//     res.status(500).send('Error in TTS');
-//   }
-// });
 
 
 // SPEECH TO TEXT

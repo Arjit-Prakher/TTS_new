@@ -35,14 +35,17 @@ async function generateNewToken() {
 }
 
 async function getTokenSTT() {
-  if (!apiToken || Date.now() >= tokenExpiry) {
-    console.log("Token expired, requesting new...");
+
+  if(Date.now() >= tokenExpiry * 1000) {
+    console.log("Token Expired, generating new..");
     const newToken = await generateNewToken();
     apiToken = newToken?.access_token;
     tokenExpiry = newToken?.expiration;
-    // console.log("API_Token:", apiToken);
+  } else {
+    console.log("Token is fresh");
   }
   return apiToken;
+
 }
 
 module.exports = getTokenSTT;
